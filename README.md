@@ -5,17 +5,26 @@ This project is an end-to-end machine learning application for predicting Chroni
 ## Project Structure
 
 Project Initialization and Planning Phase/
+
 Data Collection and Preprocessing Phase/
+
 Model Development Phase/
+
 Model Optimization and Tuning Phase/
+
 CompleteCode/
+
 │
+
 ├── static/ # Static files (CSS, JavaScript)
+
 ├── templates/ # HTML templates
+
 ├── CKDPrediction.ipynb # Jupyter notebook with full ML pipeline
+
 ├── app.py # Flask web application
+
 ├── chronickidneydisease.csv # Dataset used for training
-├── requirements.txt # Python dependencies
 
 
 ## Features
