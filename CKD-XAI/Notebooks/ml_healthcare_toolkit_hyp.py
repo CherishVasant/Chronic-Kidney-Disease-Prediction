@@ -23,6 +23,8 @@ from xgboost import XGBClassifier
 import lightgbm as lgb
 from lightgbm import LGBMClassifier
 from catboost import CatBoostClassifier
+import pickle
+import os 
 
 def get_hyperparameter_grids_for_small_dataset():
     
@@ -1047,8 +1049,28 @@ def plot_model_comparison(results):
     plt.title('Cross-Validation Performance Comparison (Top 10 Models)')
     plt.tight_layout()
     plt.show()
-    
-def run_healthcare_ml_pipeline_hyp(X_train, X_test, y_train, y_test):
+
+def save_trained_models_as_pickles(trained_models, version_tag="v2_hyp"):
+    """
+    Save each trained model as a separate pickle file
+    """
+    from pathlib import Path
+    import pickle
+
+    PROJECT_ROOT = Path.cwd().parent
+    PICKLE_DIR = PROJECT_ROOT / "PickleFiles"
+    PICKLE_DIR.mkdir(exist_ok=True)
+
+    for model_name, model in trained_models.items():
+        safe_name = model_name.replace(" ", "_").replace("(", "").replace(")", "")
+        file_path = PICKLE_DIR / f"{safe_name}_{version_tag}.pkl"
+
+        with open(file_path, "wb") as f:
+            pickle.dump(model, f)
+
+        print(f"Saved model → {file_path}")
+
+def run_healthcare_ml_pipeline_hyp(X_train, X_test, y_train, y_test,version_tag="unknown"):
 
     print(f"\n{'='*80}")
     print("HEALTHCARE ML ANALYSIS PIPELINE")
@@ -1408,6 +1430,9 @@ def run_healthcare_ml_pipeline_hyp(X_train, X_test, y_train, y_test):
     print(f"   Average Recall: {ranked_models['Recall'].mean():.4f}")
     print(f"   Average Precision: {ranked_models['Precision'].mean():.4f}")
 
+    save_trained_models_as_pickles(trained_models, version_tag=version_tag)
+    print(f"[INFO] Pickle files saved successfully for version: {version_tag}")
+
     return {
         'results': results_dict,
         'results_list': results_list,
@@ -1426,4 +1451,5 @@ def run_healthcare_ml_pipeline_hyp(X_train, X_test, y_train, y_test):
             'risk_distribution': tuned_risks if tuning_summary else None
         }
     }
+
 
