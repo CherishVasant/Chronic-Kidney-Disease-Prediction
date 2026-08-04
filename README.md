@@ -12,7 +12,15 @@ Model Development Phase/
 
 Model Optimization and Tuning Phase/
 
-CompleteCode/
+Notebooks/ # 1_DataCleaning, 2_Visualization, 3_FeatureEngineering, 4_ModelTraining, 5_XAI
+
+Dataset/ # chronickidneydisease.csv, df_clean.csv, df_clean_eng.csv
+
+PickleFiles/ # Trained models + ckd_v{0,1,2}_artifacts.pkl (scaler/encoder per version)
+
+Plots/ # Saved EDA/model plots
+
+FrontEnd/
 
 │
 
@@ -20,11 +28,7 @@ CompleteCode/
 
 ├── templates/ # HTML templates
 
-├── CKDPrediction.ipynb # Jupyter notebook with full ML pipeline
-
-├── app.py # Flask web application
-
-├── chronickidneydisease.csv # Dataset used for training
+├── app.py # Flask web application (reads from ../PickleFiles and ../Dataset)
 
 
 ## Features
@@ -85,7 +89,7 @@ CompleteCode/
 
 1. Clone the repository or download the project files.
 
-2. Navigate to the `CompleteCode` directory.
+2. Navigate to the `FrontEnd` directory.
 
 3. Run the Flask app:
     python app.py
